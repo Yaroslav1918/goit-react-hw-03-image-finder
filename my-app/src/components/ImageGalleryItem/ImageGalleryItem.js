@@ -4,11 +4,17 @@ import {
 } from "../ImageGalleryItem/ImageGalleryItem.styled";
 import PropTypes from "prop-types";
 
-const ImageGalleryItem = () => (
-  <GalleryItem>
-    <GalleryImg src="" alt="" />
-  </GalleryItem>
-);
+const ImageGalleryItem = ({ webformatURL, largeImageURL, onClick, tags }) => {
+  return (
+    <GalleryItem>
+      <GalleryImg
+        src={webformatURL}
+        alt={tags}
+        onClick={() => onClick(largeImageURL)}
+      />
+    </GalleryItem>
+  );
+};
 // ImageGalleryItem.propTypes = {
 
 // };
