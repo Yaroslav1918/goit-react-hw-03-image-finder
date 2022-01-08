@@ -1,15 +1,13 @@
 import { Component } from "react";
 import ImageGallery from "../ImageGallery";
+import PropTypes from "prop-types";
 import serviceAPI from "../serviceAPI";
-import Loader from "react-loader-spinner";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FallBackContainer } from "../../Style/FallBackContainer.styled";
 import Button from "../Button";
-import { Container } from "../../Style/Container.styled";
 import Modal from "../Modal";
 import { ModalImg } from "../Modal/Modal.styled";
-import ImageGalleryItem from "../ImageGalleryItem";
+import Loader from "../Loader";
 
 const Status = {
   IDLE: "idle",
@@ -29,7 +27,6 @@ export default class ImageGalleryInfo extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    const { page } = this.state;
     const prevName = prevProps.valueName;
     const currentName = this.props.valueName;
     if (prevName !== currentName) {
@@ -44,13 +41,13 @@ export default class ImageGalleryInfo extends Component {
 
     serviceAPI
       .fetchImg(currentName, page)
-      .then(({ hits }) =>
+      .then(({ hits }) => {
         this.setState((prevState) => ({
           gallery: [...prevState.gallery, ...hits],
           page: prevState.page + 1,
           status: Status.RESOLVED,
-        }))
-      )
+        }));
+      })
       .catch((error) => this.setState({ error, status: Status.REJECTED }));
   };
 
@@ -65,36 +62,20 @@ export default class ImageGalleryInfo extends Component {
     }));
   };
 
-  scrollToDown = () => {
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: "smooth",
-    });
-  };
-
   render() {
-    const { gallery, error, status, showModal, urlImg } = this.state;
+    const { gallery, status, showModal, urlImg } = this.state;
 
     if (status === "idle") {
       return null;
     }
 
     if (status === "pending") {
-      return (
-        <FallBackContainer>
-          <Loader
-            type="Circles"
-            color="#00BFFF"
-            height={100}
-            width={100}
-            timeout={3000}
-          />
-        </FallBackContainer>
-      );
+      return <Loader />;
     }
 
     if (status === "rejected") {
-      return <div>eror</div>;
+      const { error } = this.state;
+      return <div>{error}</div>;
     }
 
     if (status === "resolved") {
@@ -108,7 +89,7 @@ export default class ImageGalleryInfo extends Component {
           ) : null}
           {showModal && (
             <Modal onClose={this.toggleModal}>
-              <ModalImg src={urlImg} alt="" />
+              <ModalImg src={urlImg} />
             </Modal>
           )}
         </>
@@ -116,3 +97,6 @@ export default class ImageGalleryInfo extends Component {
     }
   }
 }
+ImageGalleryInfo.propTypes = {
+  valueName: PropTypes.string.isRequired,
+};

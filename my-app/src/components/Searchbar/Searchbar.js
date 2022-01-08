@@ -1,8 +1,8 @@
 import { Component } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FallBackContainer } from "../../Style/FallBackContainer.styled";
-
+import { BiSearch } from "react-icons/bi";
+import { IconContext } from "react-icons";
 import PropTypes from "prop-types";
 import {
   SearchbarHeader,
@@ -45,9 +45,11 @@ class Searchbar extends Component {
         <ToastContainer />
         <SearchbarForm onSubmit={this.handleSubmit}>
           <SearchbarButton type="submit">
+            <IconContext.Provider value={{ color: "blue", size: "20px" }}>
+              <BiSearch />
+            </IconContext.Provider>
             <Searchbarlabel>Search</Searchbarlabel>
           </SearchbarButton>
-
           <SearchbarInput
             type="text"
             autocomplete="off"
@@ -62,5 +64,7 @@ class Searchbar extends Component {
     );
   }
 }
-Searchbar.propTypes = {};
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
 export default Searchbar;

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
-import { ModalImg, WrapperModal, WrapperOverlay } from "./Modal.styled";
+import { WrapperModal, WrapperOverlay } from "./Modal.styled";
 // import {} from "../Modal/Modal.styled";
 
 const modalRoot = document.querySelector("#modal-root");
@@ -35,6 +35,6 @@ export default class Modal extends Component {
   }
 }
 
-// Modal.propTypes = {
-
-// };
+Modal.propTypes = {
+  onClose: PropTypes.func.isRequired,
+};

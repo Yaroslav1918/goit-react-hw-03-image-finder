@@ -11,13 +11,16 @@ const ImageGallery = ({ hits, onClick }) => {
           key={item.id}
           webformatURL={item.webformatURL}
           largeImageURL={item.largeImageURL}
-          tags={item}
+          tags={item.tags}
           onClick={onClick}
         />
       ))}
     </GalleryList>
   );
 };
-// ImageGallery.propTypes = {};
+ImageGallery.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  hits: PropTypes.array.isRequired,
+};
 
 export default ImageGallery;
