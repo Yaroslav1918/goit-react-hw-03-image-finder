@@ -17,7 +17,7 @@ export const WrapperModal = styled.div`
   max-height: calc(100vh - 24px);
 `;
 export const ModalImg = styled.img`
-  width: 700px;
+  width: 90%;
   height: auto;
   border-radius: 2%;
 `;
